@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+     <title>Mendeley</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+   
+   <div class="container-full">
+   <div class="row">
+      <div class="col-md-3 no-float" >
+         <!--header id="optiuniText">optiuni</header-->
+         <div id="app"></div>
+         <!--div class="navbar ">
+             
+            <ul style="display: none;" class="principal">
+               <li><a href="#">Toate documentele</a>
+               </li> 
+            </ul>
+            <ul class="itemi-adaugati" id="foldereNoi">
+               <li>Denumire folder</li>
+               <li>...</li>
+               <li>Cos de gunoi</li>
+            </ul>
+         </div-->
+         <button style="display: none;" data-toggle="modal" id="adaugaFolder" data-target="#modalFolder" > <i class="fa fa-plus-square-o" aria-hidden="true"></i>Adauga folder</button>
+        
+      </div>
+      <div class="col-md-9 no-float ">
+         <div class="btn-toolbar" style="margin-top:0.5em; ">
+            <div class="input-group">
+               <input type="text" class="form-control" placeholder="Cauta document...">
+               <span class="input-group-btn">
+               <button class="btn btn-search" type="button"><i class="fa fa-search fa-fw"></i> Cauta</button>
+               </span>
+            </div>
+         </div>
+         <h1>Documente</h1>
+         <button type="button" class="btn" data-toggle="modal" data-target="#myModal" id="butonAdaugare">adauga document</button>
+         <h1></h1>
+         <table id="articles" class="table table-bordered table-striped">
+            <tr>
+               <th>Titlu</th>
+               <th>Autor</th>
+               <th>Anul publicarii</th>
+               <th>Nr. pagini</th>
+               <th>Editor(publisher)</th>
+            </tr>
+         </table>
+      </div>
+      
+   </div>
+   </div>
+        
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Introducere document nou</h4>
+        </div>
+        <div class="modal-body">
+         <div class="form-group">
+                        <label for="titlu">Titlu</label>
+                        <input type="text" name="titlu" id="titlu" placeholder="titlu" class="form-control"/>
+          </div>
+          <div class="form-group">
+                        <label for="autor">Autor</label>
+                        <input type="text" name="autor" id="autor" placeholder="autor" class="form-control"/>
+          </div>
+          <div class="form-group">
+                        <label for="an">Anul publicarii</label>
+                        <input type="text" name="an" id="an" placeholder="an" class="form-control"/>
+          </div>
+          <div class="form-group">
+                        <label for="nr">Numar de pagini</label>
+                        <input type="text" name="nr" id="nr" placeholder="numar" class="form-control"/>
+          </div>
+          <div class="form-group">
+                        <label for="editor">Editor</label>
+                        <input type="text" name="editor" id="editor" placeholder="editor" class="form-control"/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="inregistrareDocument()">Adauga</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  
+   <!-- Modal -->
+  <div class="modal fade" id="modalFolder" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Introducere document nou</h4>
+        </div>
+        <div class="modal-body">
+         <div class="form-group">
+                        <label for="folder">Denumire folder</label>
+                        <input type="text" name="folder" id="folder" placeholder="folder" class="form-control"/>
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="adaugaFolder()">Adauga</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<script type="text/babel">
+var App = React.createClass({
+    render: function(){
+        return(
+            <div>  
+            <FolderForm/>
+            <FolderList/>
+            </div>
+            )
+            
+    }
+});
+var FolderForm = React.createClass({
+    render: function(){
+        return(
+            <div>  
+            form
+            </div>
+            )
+            
+    }
+});
+var FolderList = React.createClass({
+    render: function(){
+        return(
+            <div>  
+           
+           lista
+           </div>
+            )
+            
+    }
+});
+ReactDOM.render(<App/>,document.getElementById('app'));
+    
+</script>
+  </body>
+</html>
